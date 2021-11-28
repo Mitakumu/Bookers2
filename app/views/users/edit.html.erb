@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <% if flash[:notice] %>
+       <div class="flash" >
+        <%= flash[:flash] %>
+       </div>
+      <% end %>
+
+      <h2>User info</h2>
+
+      <% if @user.errors.any? %>
+       <%= @user.errors.count %> errors occurred
+       <% @user.errors.full_messages.each do |message| %>
+        <%= message %>
+       <% end %>
+      <% end %>
+
+      <%= form_with model:@user, local:true do |f| %>
+       <div for="inputName">Name</div>
+       <%= f.text_field :name,autofocus: true, id:"inputName", placeholder: "Name" %>
+       <%= attachment_image_tag @user,:profile_image,:fill, 60, 60,fallback: "no_image.jpg" %>
+
+       <div for="inputImage">Image</div>
+       <%= f.attachment_field :profile_image, placeholder: "ProfileImage" %>
+
+       <div for="inputIntroduction">Introduction</div>
+       <%= f.text_area :introduction,autofocus: true, id: "inputIntroduction", placeholder: "Introduction" %>
+
+       <div>
+        <%= f.submit 'Update User', class: 'btn btn-secondary' %>
+       </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,61 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+
+     <p id="notice">
+      <%= notice %>
+     </p>
+
+     <%= render 'users/users', books: @books, user: @user %>
+
+     <h2>New book</h2>
+
+     <% if @book.errors.any? %>
+      <%= @book.errors.count %> errors occurred
+      <% @book.errors.full_messages.each do |message| %>
+       <%= message %>
+      <% end %>
+     <% end %>
+
+     <%= render 'books/newbook', book: @newbook %>
+    </div>
+
+    <div class="col-md-8 offset-md-1">
+     <h2>Book detail</h2>
+     <table class="table table-striped">
+      <tbody>
+        <tr>
+         <td>
+          <div><%= attachment_image_tag @book.user, :profile_image, :fill, 60, 60, fallback: "no_image.jpg" %></div>
+          <div>
+           <%= link_to user_path(@user.id) do %>
+            <%= @book.user.name %>
+           <% end %>
+          </div>
+         </td>
+         <td>
+          <%= link_to book_path do %>
+           <%= @book.title %>
+          <% end %>
+         </td>
+         <td><%= @book.body %></td>
+         <td>
+             <% if @book.user.id == current_user.id %>
+              <%= link_to edit_book_path do %>
+               <span class="btn btn-success">Edit</span>
+              <% end %>
+             <% end %>
+         </td>
+         <td>
+             <% if @book.user.id == current_user.id %>
+              <%= link_to book_path, method: :delete do %>
+               <span class="btn btn-danger">Destroy</span>
+              <% end %>
+             <% end %>
+         </td>
+        </tr>
+      </tbody>
+     </table>
+    </div>
+  </div>
+</div>
